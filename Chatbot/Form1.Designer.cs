@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.pImagem = new System.Windows.Forms.Panel();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.textUsuario = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -41,6 +42,11 @@
             // 
             resources.ApplyResources(this.pImagem, "pImagem");
             this.pImagem.Name = "pImagem";
+            // 
+            // progressBar1
+            // 
+            resources.ApplyResources(this.progressBar1, "progressBar1");
+            this.progressBar1.Name = "progressBar1";
             // 
             // textUsuario
             // 
@@ -73,12 +79,14 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.btnMicrofone);
             this.Controls.Add(this.textBot);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textUsuario);
             this.Controls.Add(this.pImagem);
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -93,6 +101,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBot;
         private System.Windows.Forms.Button btnMicrofone;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 

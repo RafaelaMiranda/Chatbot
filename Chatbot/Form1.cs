@@ -29,16 +29,18 @@ namespace Chatbot
                 engine = new SpeechRecognitionEngine(); // instância
                 engine.SetInputToDefaultAudioDevice(); // microfone
 
-                string[] words = { "olá", "boa noite" , "Rafaela"};
+                string[] words = { "olá", "boa noite" , "Rafaela"}; // futuramente chamar variavél do watson assistant
 
                 // carregar a gramática
                 engine.LoadGrammar(new Grammar(new GrammarBuilder(new Choices(words))));
 
                 engine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(rec);
+                engine.AudioLevelUpdated += new EventHandler<AudioLevelUpdatedEventArgs>(audioLevel);
 
                 engine.RecognizeAsync(RecognizeMode.Multiple); // iniciar o reconhecimento
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Ocorreu no LoadSpeech(): " + ex.Message);
             }
@@ -47,8 +49,17 @@ namespace Chatbot
         // metódo que é chamado quando algo é reconhecido
         private void rec(object s, SpeechRecognizedEventArgs e)
         {
-            pImagem.BackgroundImage = Image.FromFile(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + @"\TCC\Codigo\Chatbot\Chatbot\Eva\eve_eyes_02.jpg");
+            pImagem.BackgroundImage = Image.FromFile(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + @"\TCC\Codigo\Chatbot\Chatbot\Eva\eve_eyes_02.png");
             textUsuario.Text = e.Result.Text;
+            Speaker.Speak("Como está Rafaela?"); // chamar futuramente resposta do watson assistant
+            // escrever audio na caixa de texto textBot
+        }
+
+        private void audioLevel(object s, AudioLevelUpdatedEventArgs e)
+        {
+            this.progressBar1.Maximum = 100;
+            this.progressBar1.Minimum = 0;
+            this.progressBar1.Value = e.AudioLevel;
         }
 
         private void btnMicrofone_Click(object sender, EventArgs e)

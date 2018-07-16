@@ -107,6 +107,7 @@
     <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
     </Reference>
+    <Reference Include="System.Speech" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -125,9 +126,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.pt-BR.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
+    <Compile Include="Speaker.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -156,7 +155,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Eva\eve_eyes_01.png" />
-    <Content Include="Eva\eve_eyes_02.jpg" />
     <Content Include="Eva\eve_eyes_03.png" />
     <Content Include="Eva\eve_eyes_04.png" />
     <Content Include="Eva\eve_eyes_05.png" />
@@ -167,7 +165,6 @@
     <Content Include="Eva\eve_eyes_10.png" />
     <Content Include="Resources\eva.ico" />
     <Content Include="Resources\microfone.png" />
-    <Content Include="Resources\microphone.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
