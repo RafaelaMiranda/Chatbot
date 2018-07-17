@@ -29,24 +29,14 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.pImagem = new System.Windows.Forms.Panel();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.textUsuario = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.textBot = new System.Windows.Forms.TextBox();
-            this.btnMicrofone = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.pImagem = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pImagem)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pImagem
-            // 
-            resources.ApplyResources(this.pImagem, "pImagem");
-            this.pImagem.Name = "pImagem";
-            // 
-            // progressBar1
-            // 
-            resources.ApplyResources(this.progressBar1, "progressBar1");
-            this.progressBar1.Name = "progressBar1";
             // 
             // textUsuario
             // 
@@ -68,40 +58,36 @@
             resources.ApplyResources(this.textBot, "textBot");
             this.textBot.Name = "textBot";
             // 
-            // btnMicrofone
+            // pImagem
             // 
-            resources.ApplyResources(this.btnMicrofone, "btnMicrofone");
-            this.btnMicrofone.Name = "btnMicrofone";
-            this.btnMicrofone.UseVisualStyleBackColor = true;
-            this.btnMicrofone.Click += new System.EventHandler(this.btnMicrofone_Click);
+            resources.ApplyResources(this.pImagem, "pImagem");
+            this.pImagem.Name = "pImagem";
+            this.pImagem.TabStop = false;
             // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.btnMicrofone);
+            this.Controls.Add(this.pImagem);
             this.Controls.Add(this.textBot);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textUsuario);
-            this.Controls.Add(this.pImagem);
             this.MaximizeBox = false;
             this.Name = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.pImagem)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel pImagem;
         private System.Windows.Forms.TextBox textUsuario;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBot;
-        private System.Windows.Forms.Button btnMicrofone;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.PictureBox pImagem;
     }
 }
 

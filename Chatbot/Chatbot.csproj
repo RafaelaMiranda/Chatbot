@@ -38,6 +38,9 @@
     <Reference Include="IBM.WatsonDeveloperCloud.SpeechToText.v1, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IBM.WatsonDeveloperCloud.SpeechToText.v1.2.5.0\lib\netstandard1.3\IBM.WatsonDeveloperCloud.SpeechToText.v1.dll</HintPath>
     </Reference>
+    <Reference Include="IBM.WatsonDeveloperCloud.ToneAnalyzer.v3, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IBM.WatsonDeveloperCloud.ToneAnalyzer.v3.2.5.0\lib\netstandard1.3\IBM.WatsonDeveloperCloud.ToneAnalyzer.v3.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Speech, Version=11.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Speech\v11.0\Assembly\Microsoft.Speech.dll</HintPath>
@@ -127,6 +130,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Speaker.cs" />
+    <Compile Include="ToneAnalyzerTools.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -164,6 +168,16 @@
     <Content Include="Eva\eve_eyes_09.png" />
     <Content Include="Eva\eve_eyes_10.png" />
     <Content Include="Resources\eva.ico" />
+    <Content Include="Resources\Eva\eve_eyes_01.png" />
+    <Content Include="Resources\Eva\eve_eyes_02.png" />
+    <Content Include="Resources\Eva\eve_eyes_03.png" />
+    <Content Include="Resources\Eva\eve_eyes_04.png" />
+    <Content Include="Resources\Eva\eve_eyes_05.png" />
+    <Content Include="Resources\Eva\eve_eyes_06.png" />
+    <Content Include="Resources\Eva\eve_eyes_07.png" />
+    <Content Include="Resources\Eva\eve_eyes_08.png" />
+    <Content Include="Resources\Eva\eve_eyes_09.png" />
+    <Content Include="Resources\Eva\eve_eyes_10.png" />
     <Content Include="Resources\microfone.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
