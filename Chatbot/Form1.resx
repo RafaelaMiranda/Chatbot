@@ -476,10 +476,10 @@
     <value>Stretch</value>
   </data>
   <data name="pImagem.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 12</value>
+    <value>0, 0</value>
   </data>
   <data name="pImagem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>776, 312</value>
+    <value>802, 453</value>
   </data>
   <data name="pImagem.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -2560,9 +2560,6 @@
         /////////+AAB//////////////////8AD//////////////////////////////////////////////
         /////w==
 </value>
-  </data>
-  <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>816, 489</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>816, 489</value>

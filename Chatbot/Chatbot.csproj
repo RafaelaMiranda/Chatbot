@@ -35,11 +35,8 @@
     <Reference Include="IBM.WatsonDeveloperCloud, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IBM.WatsonDeveloperCloud.2.5.0\lib\netstandard1.3\IBM.WatsonDeveloperCloud.dll</HintPath>
     </Reference>
-    <Reference Include="IBM.WatsonDeveloperCloud.SpeechToText.v1, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\IBM.WatsonDeveloperCloud.SpeechToText.v1.2.5.0\lib\netstandard1.3\IBM.WatsonDeveloperCloud.SpeechToText.v1.dll</HintPath>
-    </Reference>
-    <Reference Include="IBM.WatsonDeveloperCloud.ToneAnalyzer.v3, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\IBM.WatsonDeveloperCloud.ToneAnalyzer.v3.2.5.0\lib\netstandard1.3\IBM.WatsonDeveloperCloud.ToneAnalyzer.v3.dll</HintPath>
+    <Reference Include="IBM.WatsonDeveloperCloud.LanguageTranslator.v3, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IBM.WatsonDeveloperCloud.LanguageTranslator.v3.2.5.0\lib\netstandard1.3\IBM.WatsonDeveloperCloud.LanguageTranslator.v3.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Speech, Version=11.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -98,6 +95,7 @@
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.0.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
     </Reference>
@@ -110,6 +108,7 @@
     <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
     </Reference>
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Speech" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -158,15 +157,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Eva\eve_eyes_01.png" />
-    <Content Include="Eva\eve_eyes_03.png" />
-    <Content Include="Eva\eve_eyes_04.png" />
-    <Content Include="Eva\eve_eyes_05.png" />
-    <Content Include="Eva\eve_eyes_06.png" />
-    <Content Include="Eva\eve_eyes_07.png" />
-    <Content Include="Eva\eve_eyes_08.png" />
-    <Content Include="Eva\eve_eyes_09.png" />
-    <Content Include="Eva\eve_eyes_10.png" />
     <Content Include="Resources\eva.ico" />
     <Content Include="Resources\Eva\eve_eyes_01.png" />
     <Content Include="Resources\Eva\eve_eyes_02.png" />
@@ -179,6 +169,9 @@
     <Content Include="Resources\Eva\eve_eyes_09.png" />
     <Content Include="Resources\Eva\eve_eyes_10.png" />
     <Content Include="Resources\microfone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

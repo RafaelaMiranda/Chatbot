@@ -2,7 +2,6 @@ C:\Users\rafaela\Documents\TCC\Codigo\Chatbot\Chatbot\bin\Debug\Chatbot.exe.conf
 C:\Users\rafaela\Documents\TCC\Codigo\Chatbot\Chatbot\bin\Debug\Chatbot.exe
 C:\Users\rafaela\Documents\TCC\Codigo\Chatbot\Chatbot\bin\Debug\Chatbot.pdb
 C:\Users\rafaela\Documents\TCC\Codigo\Chatbot\Chatbot\bin\Debug\IBM.WatsonDeveloperCloud.dll
-C:\Users\rafaela\Documents\TCC\Codigo\Chatbot\Chatbot\bin\Debug\IBM.WatsonDeveloperCloud.SpeechToText.v1.dll
 C:\Users\rafaela\Documents\TCC\Codigo\Chatbot\Chatbot\bin\Debug\Microsoft.Speech.dll
 C:\Users\rafaela\Documents\TCC\Codigo\Chatbot\Chatbot\bin\Debug\Microsoft.Win32.Primitives.dll
 C:\Users\rafaela\Documents\TCC\Codigo\Chatbot\Chatbot\bin\Debug\Newtonsoft.Json.dll
@@ -35,4 +34,4 @@ C:\Users\rafaela\Documents\TCC\Codigo\Chatbot\Chatbot\obj\Debug\Chatbot.csproj.C
 C:\Users\rafaela\Documents\TCC\Codigo\Chatbot\Chatbot\obj\Debug\Chatbot.exe
 C:\Users\rafaela\Documents\TCC\Codigo\Chatbot\Chatbot\obj\Debug\Chatbot.pdb
 C:\Users\rafaela\Documents\TCC\Codigo\Chatbot\Chatbot\obj\Debug\Chatbot.csprojAssemblyReference.cache
-C:\Users\rafaela\Documents\TCC\Codigo\Chatbot\Chatbot\bin\Debug\IBM.WatsonDeveloperCloud.ToneAnalyzer.v3.dll
+C:\Users\rafaela\Documents\TCC\Codigo\Chatbot\Chatbot\bin\Debug\IBM.WatsonDeveloperCloud.LanguageTranslator.v3.dll

@@ -73,7 +73,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textUsuario);
-            this.MaximizeBox = false;
             this.Name = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pImagem)).EndInit();
             this.ResumeLayout(false);
