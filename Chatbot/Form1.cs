@@ -9,12 +9,15 @@ using System.Text;
 using Newtonsoft.Json.Linq;
 using Microsoft.Speech.Recognition;
 using System.Web;
+using System.Collections.Generic;
 
 namespace Chatbot
 {
     public partial class Form1 : Form
     {
         private SpeechRecognitionEngine engine; // engine de Reconhecimento
+        private bool isBotListening = true;
+        string emotion = "";
 
         public Form1()
         {
@@ -24,25 +27,45 @@ namespace Chatbot
             textUsuario.Hide();
         }
         #region speech
-        private void LoadSpeech()
+        private async void LoadSpeech()
         {
-            try
+            if (isBotListening == true)
             {
-                engine = new SpeechRecognitionEngine(); // instância
-                engine.SetInputToDefaultAudioDevice(); // microfone
+                try
+                {
+                    engine = new SpeechRecognitionEngine(); // instância
+                    engine.SetInputToDefaultAudioDevice(); // microfone
 
-                string[] words = { "estou feliz", "estou com raiva", "estou triste", "estou neutra" }; // futuramente chamar variavél do watson assistant
+                    var client = new HttpClient();
+                    var queryString = HttpUtility.ParseQueryString(string.Empty);
 
-                // carregar a gramática
-                engine.LoadGrammar(new Grammar(new GrammarBuilder(new Choices(words))));
-                engine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(Luis);
-                engine.RecognizeAsync(RecognizeMode.Multiple); // iniciar o reconhecimento
+                    // This app ID is for a public sample app that recognizes requests to turn on and turn off lights
+                    var subscriptionKey = "4beff44499c8492a8359493e5b1d8bd9";
 
+                    // The request header contains your subscription key
+                    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
+
+                    var uri = "https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/467f5821-0494-4de0-bde7-70cb65aaa195/versions/0.1/export";
+                    var response = await client.GetAsync(uri);
+                    var strResponseContent = await response.Content.ReadAsStringAsync();
+                    // Display the JSON result from LUIS
+                    JObject rss = JObject.Parse(strResponseContent);
+                    string[] words = new string[18];
+                    for (int i = 0; i < 18; i++)
+                    {
+                        words[i] = (string)rss["utterances"][i]["text"];
+                        engine.LoadGrammar(new Grammar(new GrammarBuilder(new Choices(words[i]))));
+                    }
+
+                    engine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(Luis);
+                    engine.RecognizeAsync(RecognizeMode.Multiple); // iniciar o reconhecimento
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ocorreu no LoadSpeech(): " + ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ocorreu no LoadSpeech(): " + ex.Message);
-            }
+
         }
         #endregion
         #region translate
@@ -128,21 +151,6 @@ namespace Chatbot
             responseFromServer = ToneAnalyzerTools.JsonPrettify(responseFromServer);
             // Transforma o resultado vindo do servidor em JSON
             JObject rss = JObject.Parse(responseFromServer);
-            float maxScore = 0;
-            string emotion = "";
-
-            for (int i = 0; i < 5; i++)
-            {
-                // captura o score de cada uma das 5 emoções
-                float score = (float)rss["document_tone"]["tone_categories"][0]["tones"][i]["score"];
-                if (score > maxScore)
-                {
-                    emotion = "";
-                    maxScore = score;
-                    // captura o nome da emoção com o score mais alto
-                    emotion = (string)rss["document_tone"]["tone_categories"][0]["tones"][i]["tone_name"];
-                }
-            }
 
             if (emotion.Equals("Joy"))
             {
@@ -195,13 +203,24 @@ namespace Chatbot
             // Display the JSON result from LUIS
             JObject rss = JObject.Parse(strResponseContent);
             string intent = (string)rss["topScoringIntent"]["intent"];
+            isBotListening = false;
 
-            if (intent.Equals("feliz"))
+            if (intent.Equals("Contato"))
             {
-                Speaker.Speak("Você pode entrar em contato pelo telefone (19) 3406-5776"); // chamar futuramente resposta do watson assistant
-                System.Threading.Thread.Sleep(5000);
+                emotion = "Joy";
+                Speaker.Speak("Você pode entrar em contato pelo telefone (19) 3406-5776");
             }
-
+            else if (intent.Equals("AconteceVestibularFatec"))
+            {
+                emotion = "Anger";
+                Speaker.Speak("Essa informação você encontrará com precisão no site vestibularfatec.com.br");
+            }
+            else if (intent.Equals("Cumprimento"))
+            {
+                emotion = "Joy";
+                Speaker.Speak("Olá. Como posso te ajudar?");
+            }
+            isBotListening = true;
             Translate();
         }
 
