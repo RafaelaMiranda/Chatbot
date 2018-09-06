@@ -47,8 +47,8 @@ namespace Chatbot
                 var strResponseContent = await response.Content.ReadAsStringAsync();
                 // Display the JSON result from LUIS
                 JObject rss = JObject.Parse(strResponseContent);
-                string[] words = new string[18];
-                for (int i = 0; i < 18; i++)
+                string[] words = new string[17];
+                for (int i = 0; i < 16; i++)
                 {
                     words[i] = (string)rss["utterances"][i]["text"];
                     engine.LoadGrammar(new Grammar(new GrammarBuilder(new Choices(words[i]))));
@@ -65,7 +65,8 @@ namespace Chatbot
 
         #endregion
         #region translate
-        async void Translate()
+        // Utilização da API de tradução pelo fato do Tone Analyzer (emoções) não possuir compatibilidade com português
+        async void TranslateMessageToEnglish()
         {
             string host = "https://api.cognitive.microsofttranslator.com";
             string path = "/translate?api-version=3.0";
@@ -221,7 +222,7 @@ namespace Chatbot
                 emotion = "Sadness";
                 Speaker.Speak("Os cursos oferecidos são Análise e Desenvolvimento de Sistemas, Segurança da Informação, Jogos Digitais, Logistica, Gestão Empresarial, Produção Textil e Têxtil e Moda");
             }
-            Translate();
+            TranslateMessageToEnglish();
         }
 
     }
