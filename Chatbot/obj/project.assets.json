@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETFramework,Version=v4.6.1": {
-      "IBM.WatsonDeveloperCloud/2.5.0": {
+      "IBM.WatsonDeveloperCloud/2.7.0": {
         "type": "package",
         "dependencies": {
           "NETStandard.Library": "1.6.0",
@@ -17,10 +17,10 @@
           "lib/netstandard1.3/IBM.WatsonDeveloperCloud.dll": {}
         }
       },
-      "IBM.WatsonDeveloperCloud.Assistant.v1/2.5.0": {
+      "IBM.WatsonDeveloperCloud.Assistant.v1/2.7.0": {
         "type": "package",
         "dependencies": {
-          "IBM.WatsonDeveloperCloud": "2.5.0",
+          "IBM.WatsonDeveloperCloud": "2.7.0",
           "NETStandard.Library": "1.6.0",
           "Newtonsoft.Json": "9.0.1"
         },
@@ -742,7 +742,7 @@
       }
     },
     ".NETFramework,Version=v4.6.1/win": {
-      "IBM.WatsonDeveloperCloud/2.5.0": {
+      "IBM.WatsonDeveloperCloud/2.7.0": {
         "type": "package",
         "dependencies": {
           "NETStandard.Library": "1.6.0",
@@ -757,10 +757,10 @@
           "lib/netstandard1.3/IBM.WatsonDeveloperCloud.dll": {}
         }
       },
-      "IBM.WatsonDeveloperCloud.Assistant.v1/2.5.0": {
+      "IBM.WatsonDeveloperCloud.Assistant.v1/2.7.0": {
         "type": "package",
         "dependencies": {
-          "IBM.WatsonDeveloperCloud": "2.5.0",
+          "IBM.WatsonDeveloperCloud": "2.7.0",
           "NETStandard.Library": "1.6.0",
           "Newtonsoft.Json": "9.0.1"
         },
@@ -1408,7 +1408,7 @@
       }
     },
     ".NETFramework,Version=v4.6.1/win-x64": {
-      "IBM.WatsonDeveloperCloud/2.5.0": {
+      "IBM.WatsonDeveloperCloud/2.7.0": {
         "type": "package",
         "dependencies": {
           "NETStandard.Library": "1.6.0",
@@ -1423,10 +1423,10 @@
           "lib/netstandard1.3/IBM.WatsonDeveloperCloud.dll": {}
         }
       },
-      "IBM.WatsonDeveloperCloud.Assistant.v1/2.5.0": {
+      "IBM.WatsonDeveloperCloud.Assistant.v1/2.7.0": {
         "type": "package",
         "dependencies": {
-          "IBM.WatsonDeveloperCloud": "2.5.0",
+          "IBM.WatsonDeveloperCloud": "2.7.0",
           "NETStandard.Library": "1.6.0",
           "Newtonsoft.Json": "9.0.1"
         },
@@ -2074,7 +2074,7 @@
       }
     },
     ".NETFramework,Version=v4.6.1/win-x86": {
-      "IBM.WatsonDeveloperCloud/2.5.0": {
+      "IBM.WatsonDeveloperCloud/2.7.0": {
         "type": "package",
         "dependencies": {
           "NETStandard.Library": "1.6.0",
@@ -2089,10 +2089,10 @@
           "lib/netstandard1.3/IBM.WatsonDeveloperCloud.dll": {}
         }
       },
-      "IBM.WatsonDeveloperCloud.Assistant.v1/2.5.0": {
+      "IBM.WatsonDeveloperCloud.Assistant.v1/2.7.0": {
         "type": "package",
         "dependencies": {
-          "IBM.WatsonDeveloperCloud": "2.5.0",
+          "IBM.WatsonDeveloperCloud": "2.7.0",
           "NETStandard.Library": "1.6.0",
           "Newtonsoft.Json": "9.0.1"
         },
@@ -2741,22 +2741,24 @@
     }
   },
   "libraries": {
-    "IBM.WatsonDeveloperCloud/2.5.0": {
-      "sha512": "LAlnJuP9tiKCVjQCCc/ltdsdCWh3ezAR2l0/anexZpwIEpBdwV+f2gtn23o08qghINyZZmrOj0w4uKNv23mzLw==",
+    "IBM.WatsonDeveloperCloud/2.7.0": {
+      "sha512": "p0VZn67EvQx96Eios3ABNQYgjqT2PXEIJxrcV2eMNUvKzfiTw1iEtqPAoJUjnwxQhN0uiLUu03GQUWGhRrJBQg==",
       "type": "package",
-      "path": "ibm.watsondevelopercloud/2.5.0",
+      "path": "ibm.watsondevelopercloud/2.7.0",
       "files": [
-        "ibm.watsondevelopercloud.2.5.0.nupkg.sha512",
+        ".signature.p7s",
+        "ibm.watsondevelopercloud.2.7.0.nupkg.sha512",
         "ibm.watsondevelopercloud.nuspec",
         "lib/netstandard1.3/IBM.WatsonDeveloperCloud.dll"
       ]
     },
-    "IBM.WatsonDeveloperCloud.Assistant.v1/2.5.0": {
-      "sha512": "pku0KyF2JqOsx4YzI1pU10TGzAmSe9mEmqDzz6p0yx07O1Y++AdbCV9RwFUUB1V+ediLOlSIsjiAiEQkcW9Rhw==",
+    "IBM.WatsonDeveloperCloud.Assistant.v1/2.7.0": {
+      "sha512": "8H0YtV1WBPKftsX3x27riJpDxFawngXDzoSJH1U9D+NvSke6Zo6FmsDjzNUWJ4ofULCBmaMbMBlZsbv7YCL3Dw==",
       "type": "package",
-      "path": "ibm.watsondevelopercloud.assistant.v1/2.5.0",
+      "path": "ibm.watsondevelopercloud.assistant.v1/2.7.0",
       "files": [
-        "ibm.watsondevelopercloud.assistant.v1.2.5.0.nupkg.sha512",
+        ".signature.p7s",
+        "ibm.watsondevelopercloud.assistant.v1.2.7.0.nupkg.sha512",
         "ibm.watsondevelopercloud.assistant.v1.nuspec",
         "lib/netstandard1.3/IBM.WatsonDeveloperCloud.Assistant.v1.dll"
       ]
@@ -5482,7 +5484,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.6.1": [
-      "IBM.WatsonDeveloperCloud.Assistant.v1 >= 2.5.0"
+      "IBM.WatsonDeveloperCloud.Assistant.v1 >= 2.7.0"
     ]
   },
   "packageFolders": {
@@ -5520,7 +5522,7 @@
         "dependencies": {
           "IBM.WatsonDeveloperCloud.Assistant.v1": {
             "target": "Package",
-            "version": "[2.5.0, )"
+            "version": "[2.7.0, )"
           }
         }
       }

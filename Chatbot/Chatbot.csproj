@@ -58,7 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="IBM.WatsonDeveloperCloud.Assistant.v1" Version="2.5.0" />
+    <PackageReference Include="IBM.WatsonDeveloperCloud.Assistant.v1" Version="2.7.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Form1.cs">

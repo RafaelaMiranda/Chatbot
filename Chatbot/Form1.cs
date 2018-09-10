@@ -54,7 +54,7 @@ namespace Chatbot
                     engine.LoadGrammar(new Grammar(new GrammarBuilder(new Choices(words[i]))));
                 }
 
-                engine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(Luis);
+                engine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(Assistant);
                 engine.RecognizeAsync(RecognizeMode.Multiple); // iniciar o reconhecimento
             }
             catch (Exception ex)
@@ -168,60 +168,24 @@ namespace Chatbot
 
         }
         #endregion
-        #region luis
-        private async void Luis(object s, SpeechRecognizedEventArgs e)
+        #region assistant
+        async void Assistant(object s, SpeechRecognizedEventArgs e)
         {
             textUsuario.Text = e.Result.Text;
 
             var client = new HttpClient();
-            var queryString = HttpUtility.ParseQueryString(string.Empty);
 
-            // This app ID is for a public sample app that recognizes requests to turn on and turn off lights
-            var luisAppId = "467f5821-0494-4de0-bde7-70cb65aaa195";
-            var subscriptionKey = "4beff44499c8492a8359493e5b1d8bd9";
+            string host = "https://node-red-chatbot-fatec.mybluemix.net/facebook?mensagem=";
+            string message = textUsuario.Text;
+            string url = host + message;
 
-            // The request header contains your subscription key
-            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
+            var response = await client.GetAsync(url);
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(responseBody), Formatting.Indented);
 
-            // The "q" parameter contains the utterance to send to LUIS
-            queryString["q"] = textUsuario.Text;
-
-            // These optional request parameters are set to their default values
-            queryString["timezoneOffset"] = "0";
-            queryString["verbose"] = "false";
-            queryString["spellCheck"] = "false";
-            queryString["staging"] = "false";
-
-            var uri = "https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/" + luisAppId + "?" + queryString;
-            var response = await client.GetAsync(uri);
-
-            var strResponseContent = await response.Content.ReadAsStringAsync();
-
-            // Display the JSON result from LUIS
-            JObject rss = JObject.Parse(strResponseContent);
-            string intent = (string)rss["topScoringIntent"]["intent"];
-            engine.RequestRecognizerUpdate();
-
-            if (intent.Equals("Contato"))
-            {
-                emotion = "Joy";
-                Speaker.Speak("Você pode entrar em contato pelo telefone (19) 3406-5776");
-            }
-            else if (intent.Equals("AconteceVestibularFatec"))
-            {
-                emotion = "Anger";
-                Speaker.Speak("Essa informação você encontrará com precisão no site vestibularfatec.com.br");
-            }
-            else if (intent.Equals("Cumprimento"))
-            {
-                emotion = "Joy";
-                Speaker.Speak("Olá. Como posso te ajudar?");
-            }
-            else if (intent.Equals("Curso"))
-            {
-                emotion = "Sadness";
-                Speaker.Speak("Os cursos oferecidos são Análise e Desenvolvimento de Sistemas, Segurança da Informação, Jogos Digitais, Logistica, Gestão Empresarial, Produção Textil e Têxtil e Moda");
-            }
+            JToken rss = JToken.Parse(result);
+            string rssTitle = (string)rss[0]["text"];
+            Speaker.Speak(rssTitle);
             TranslateMessageToEnglish();
         }
 
