@@ -9,7 +9,6 @@ using System.Text;
 using Newtonsoft.Json.Linq;
 using Microsoft.Speech.Recognition;
 using System.Web;
-using System.Collections.Generic;
 
 namespace Chatbot
 {
@@ -47,15 +46,17 @@ namespace Chatbot
                 var strResponseContent = await response.Content.ReadAsStringAsync();
                 // Display the JSON result from LUIS
                 JObject rss = JObject.Parse(strResponseContent);
-                string[] words = new string[17];
-                for (int i = 0; i < 16; i++)
+                string[] words = new string[107];
+                for (int i = 0; i < 106; i++)
                 {
                     words[i] = (string)rss["utterances"][i]["text"];
                     engine.LoadGrammar(new Grammar(new GrammarBuilder(new Choices(words[i]))));
                 }
 
+
                 engine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(Assistant);
                 engine.RecognizeAsync(RecognizeMode.Multiple); // iniciar o reconhecimento
+
             }
             catch (Exception ex)
             {
@@ -64,6 +65,7 @@ namespace Chatbot
         }
 
         #endregion
+
         #region translate
         // Utilização da API de tradução pelo fato do Tone Analyzer (emoções) não possuir compatibilidade com português
         async void TranslateMessageToEnglish()
@@ -166,6 +168,9 @@ namespace Chatbot
                 pImagem.BackgroundImage = Image.FromFile(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + @"\TCC\Codigo\Chatbot\Chatbot\Resources\Eva\eve_eyes_02.png");
             }
 
+            // Volta o Microfone, porém a fala do bot ainda não chegou ao fim
+            LoadSpeech();
+
         }
         #endregion
         #region assistant
@@ -173,9 +178,12 @@ namespace Chatbot
         {
             textUsuario.Text = e.Result.Text;
 
+            // Pausa o Microfone
+            engine.RecognizeAsyncStop();
+
             var client = new HttpClient();
 
-            string host = "https://node-red-chatbot-fatec.mybluemix.net/facebook?mensagem=";
+            string host = "https://node-red-chatbot-fatecamericana.mybluemix.net/facebook?mensagem=";
             string message = textUsuario.Text;
             string url = host + message;
 
