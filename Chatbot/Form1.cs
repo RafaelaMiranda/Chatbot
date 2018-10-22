@@ -9,13 +9,14 @@ using System.Text;
 using Newtonsoft.Json.Linq;
 using Microsoft.Speech.Recognition;
 using System.Web;
+using System.Linq;
 
 namespace Chatbot
 {
     public partial class Form1 : Form
     {
         private SpeechRecognitionEngine engine; // engine de Reconhecimento
-        string emotion = "";
+
 
         public Form1()
         {
@@ -40,19 +41,19 @@ namespace Chatbot
 
                 // The request header contains your subscription key
                 client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
-
                 var uri = "https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/467f5821-0494-4de0-bde7-70cb65aaa195/versions/0.1/export";
+
                 var response = await client.GetAsync(uri);
                 var strResponseContent = await response.Content.ReadAsStringAsync();
                 // Display the JSON result from LUIS
                 JObject rss = JObject.Parse(strResponseContent);
+
                 string[] words = new string[107];
                 for (int i = 0; i < 106; i++)
                 {
                     words[i] = (string)rss["utterances"][i]["text"];
                     engine.LoadGrammar(new Grammar(new GrammarBuilder(new Choices(words[i]))));
                 }
-
 
                 engine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(Assistant);
                 engine.RecognizeAsync(RecognizeMode.Multiple); // iniciar o reconhecimento
@@ -151,6 +152,25 @@ namespace Chatbot
             // Transforma o resultado vindo do servidor em JSON
             JObject rss = JObject.Parse(responseFromServer);
 
+            int i;
+            string emotion = "";
+            float score = 0;
+            float rssEmotion;
+
+            for (i = 0; i < 5; i++)
+            {
+                rssEmotion = (float)rss["document_tone"]["tone_categories"][0]["tones"][i]["score"];
+
+                if (i == 0)
+                    rssEmotion = score;
+
+                if (rssEmotion > score)
+                {
+                    rssEmotion = score;
+                    emotion = (string)rss["document_tone"]["tone_categories"][0]["tones"][i]["tone_name"];
+                }
+            }
+
             if (emotion.Equals("Joy"))
             {
                 pImagem.BackgroundImage = Image.FromFile(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + @"\TCC\Codigo\Chatbot\Chatbot\Resources\Eva\eve_eyes_05.png");
@@ -168,7 +188,6 @@ namespace Chatbot
                 pImagem.BackgroundImage = Image.FromFile(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + @"\TCC\Codigo\Chatbot\Chatbot\Resources\Eva\eve_eyes_02.png");
             }
 
-            // Volta o Microfone, porém a fala do bot ainda não chegou ao fim
             LoadSpeech();
 
         }
@@ -176,12 +195,9 @@ namespace Chatbot
         #region assistant
         async void Assistant(object s, SpeechRecognizedEventArgs e)
         {
-            textUsuario.Text = e.Result.Text;
-
-            // Pausa o Microfone
-            engine.RecognizeAsyncStop();
-
             var client = new HttpClient();
+
+            textUsuario.Text = e.Result.Text;
 
             string host = "https://node-red-chatbot-fatecamericana.mybluemix.net/facebook?mensagem=";
             string message = textUsuario.Text;
@@ -189,11 +205,10 @@ namespace Chatbot
 
             var response = await client.GetAsync(url);
             var responseBody = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.SerializeObject(JsonConvert.DeserializeObject(responseBody), Formatting.Indented);
 
-            JToken rss = JToken.Parse(result);
-            string rssTitle = (string)rss[0]["text"];
-            Speaker.Speak(rssTitle);
+            string assistant = WatsonAssistantTools.Assistant(responseBody);
+
+            Speaker.Speak(assistant);
             TranslateMessageToEnglish();
         }
 
