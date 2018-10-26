@@ -17,16 +17,15 @@ namespace Chatbot
     {
         private SpeechRecognitionEngine engine; // engine de Reconhecimento
 
-
         public Form1()
         {
             InitializeComponent();
-            LoadSpeech();
+            SpeechToText();
             textBot.Hide();
             textUsuario.Hide();
         }
         #region speech
-        private async void LoadSpeech()
+        private async void SpeechToText()
         {
             try
             {
@@ -45,11 +44,12 @@ namespace Chatbot
 
                 var response = await client.GetAsync(uri);
                 var strResponseContent = await response.Content.ReadAsStringAsync();
+
                 // Display the JSON result from LUIS
                 JObject rss = JObject.Parse(strResponseContent);
 
-                string[] words = new string[107];
-                for (int i = 0; i < 106; i++)
+                string[] words = new string[102];
+                for (int i = 0; i < 102; i++)
                 {
                     words[i] = (string)rss["utterances"][i]["text"];
                     engine.LoadGrammar(new Grammar(new GrammarBuilder(new Choices(words[i]))));
@@ -96,12 +96,12 @@ namespace Chatbot
                 JToken rss = JToken.Parse(result);
                 string rssTitle = (string)rss[0]["translations"][0]["text"];
                 textBot.Text = rssTitle;
-                ToneAnalyzer();
+                await ToneAnalyzerAsync();
             }
         }
         #endregion
-        #region toneAnalyzer
-        private void ToneAnalyzer()
+        #region ToneAnalyzer
+        private async System.Threading.Tasks.Task ToneAnalyzerAsync()
         {
             string baseURL;
             string username;
@@ -152,14 +152,12 @@ namespace Chatbot
             // Transforma o resultado vindo do servidor em JSON
             JObject rss = JObject.Parse(responseFromServer);
 
-            int i;
             string emotion = "";
             float score = 0;
-            float rssEmotion;
 
-            for (i = 0; i < 5; i++)
+            for (int i = 0; i < 5; i++)
             {
-                rssEmotion = (float)rss["document_tone"]["tone_categories"][0]["tones"][i]["score"];
+                float rssEmotion = (float)rss["document_tone"]["tone_categories"][0]["tones"][i]["score"];
 
                 if (i == 0)
                     rssEmotion = score;
@@ -171,28 +169,52 @@ namespace Chatbot
                 }
             }
 
-            if (emotion.Equals("Joy"))
+            var client2 = new HttpClient();
+            var queryString2 = HttpUtility.ParseQueryString(string.Empty);
+
+            // This app ID is for a public sample app that recognizes requests to turn on and turn off lights
+            var subscriptionKey2 = "4beff44499c8492a8359493e5b1d8bd9";
+
+            // The request header contains your subscription key
+            client2.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey2);
+            var uri2 = "https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/467f5821-0494-4de0-bde7-70cb65aaa195/versions/0.1/examples?skip=0&take=120";
+
+            var response2 = await client2.GetAsync(uri2);
+            var strResponseContent2 = await response2.Content.ReadAsStringAsync();
+            // Display the JSON result from LUIS
+            JArray rss2 = JArray.Parse(strResponseContent2);
+
+            string[] intents = new string[102];
+            for (int i = 0; i < 102; i++)
             {
-                pImagem.BackgroundImage = Image.FromFile(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + @"\TCC\Codigo\Chatbot\Chatbot\Resources\Eva\eve_eyes_05.png");
-            }
-            else if (emotion.Equals("Sadness"))
-            {
-                pImagem.BackgroundImage = Image.FromFile(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + @"\TCC\Codigo\Chatbot\Chatbot\Resources\Eva\eve_eyes_06.png");
-            }
-            else if (emotion.Equals("Anger"))
-            {
-                pImagem.BackgroundImage = Image.FromFile(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + @"\TCC\Codigo\Chatbot\Chatbot\Resources\Eva\eve_eyes_08.png");
-            }
-            else
-            {
-                pImagem.BackgroundImage = Image.FromFile(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + @"\TCC\Codigo\Chatbot\Chatbot\Resources\Eva\eve_eyes_02.png");
+                if ((string)rss2[i]["text"] == textUsuario.Text)
+                {
+                    intents[i] = (string)rss2[i]["intentLabel"];
+
+                    if (emotion.Equals("Joy") || ((string)rss2[i]["intentLabel"]).Equals("Cumprimento"))
+                    {
+                        pImagem.BackgroundImage = Image.FromFile(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + @"\TCC\Codigo\Chatbot\Chatbot\Resources\Eva\eve_eyes_05.png");
+                    }
+                    else if (emotion.Equals("Anger"))
+                    {
+                        pImagem.BackgroundImage = Image.FromFile(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + @"\TCC\Codigo\Chatbot\Chatbot\Resources\Eva\eve_eyes_08.png");
+                    }
+                    else if (((string)rss2[i]["intentLabel"]).Equals("Endereço"))
+                    {
+                        pImagem.BackgroundImage = Image.FromFile(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + @"\TCC\Codigo\Chatbot\Chatbot\Resources\Eva\eve_eyes_02.png");
+                    }
+                    else
+                    {                    
+                        pImagem.BackgroundImage = Image.FromFile(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + @"\TCC\Codigo\Chatbot\Chatbot\Resources\Eva\eve_eyes_06.png");
+                    }
+                }
             }
 
-            LoadSpeech();
+            SpeechToText();
 
         }
         #endregion
-        #region assistant
+        #region WatsonAssistant
         async void Assistant(object s, SpeechRecognizedEventArgs e)
         {
             var client = new HttpClient();
@@ -211,7 +233,6 @@ namespace Chatbot
             Speaker.Speak(assistant);
             TranslateMessageToEnglish();
         }
-
+        #endregion
     }
-    #endregion
 }
