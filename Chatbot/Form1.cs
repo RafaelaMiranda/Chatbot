@@ -48,15 +48,18 @@ namespace Chatbot
                 // Display the JSON result from LUIS
                 JObject rss = JObject.Parse(strResponseContent);
 
-                string[] words = new string[102];
-                for (int i = 0; i < 102; i++)
+                string[] words = new string[109];
+                for (int i = 0; i < 109; i++)
                 {
                     words[i] = (string)rss["utterances"][i]["text"];
                     engine.LoadGrammar(new Grammar(new GrammarBuilder(new Choices(words[i]))));
                 }
 
-                engine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(Assistant);
+                var speaker = textUsuario.Text;
+
+                engine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(TranslateMessageToEnglish);
                 engine.RecognizeAsync(RecognizeMode.Multiple); // iniciar o reconhecimento
+                engine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(Assistant);
 
             }
             catch (Exception ex)
@@ -69,14 +72,14 @@ namespace Chatbot
 
         #region translate
         // Utilização da API de tradução pelo fato do Tone Analyzer (emoções) não possuir compatibilidade com português
-        async void TranslateMessageToEnglish()
+        async void TranslateMessageToEnglish(object s, SpeechRecognizedEventArgs e)
         {
             string host = "https://api.cognitive.microsofttranslator.com";
             string path = "/translate?api-version=3.0";
             string params_ = "&to=en";
             string uri = host + path + params_;
             string key = "7315970e7abf4e3ba12f900725ff9dd5";
-            string text = textUsuario.Text;
+            string text = e.Result.Text;
 
             System.Object[] body = new System.Object[] { new { Text = text } };
             var requestBody = JsonConvert.SerializeObject(body);
@@ -184,14 +187,14 @@ namespace Chatbot
             // Display the JSON result from LUIS
             JArray rss2 = JArray.Parse(strResponseContent2);
 
-            string[] intents = new string[102];
-            for (int i = 0; i < 102; i++)
+            string[] intents = new string[109];
+            for (int i = 0; i < 109; i++)
             {
                 if ((string)rss2[i]["text"] == textUsuario.Text)
                 {
                     intents[i] = (string)rss2[i]["intentLabel"];
 
-                    if (emotion.Equals("Joy") || ((string)rss2[i]["intentLabel"]).Equals("Cumprimento"))
+                    if (emotion.Equals("Joy") || ((string)rss2[i]["intentLabel"]).Equals("Cumprimento") || ((string)rss2[i]["intentLabel"]).Equals("Cursos") || ((string)rss2[i]["intentLabel"]).Equals("Duração") || ((string)rss2[i]["intentLabel"]).Equals("Tecnólogo") || ((string)rss2[i]["intentLabel"]).Equals("Site") || ((string)rss2[i]["intentLabel"]).Equals("Telefone") || ((string)rss2[i]["intentLabel"]).Equals("Vestibular"))
                     {
                         pImagem.BackgroundImage = Image.FromFile(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + @"\TCC\Codigo\Chatbot\Chatbot\Resources\Eva\eve_eyes_05.png");
                     }
@@ -199,7 +202,7 @@ namespace Chatbot
                     {
                         pImagem.BackgroundImage = Image.FromFile(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + @"\TCC\Codigo\Chatbot\Chatbot\Resources\Eva\eve_eyes_08.png");
                     }
-                    else if (((string)rss2[i]["intentLabel"]).Equals("Endereço"))
+                    else if (((string)rss2[i]["intentLabel"]).Equals("Localização") || ((string)rss2[i]["intentLabel"]).Equals("Contato") || ((string)rss2[i]["intentLabel"]).Equals("DiferençasETEC") || ((string)rss2[i]["intentLabel"]).Equals("Graduação") || ((string)rss2[i]["intentLabel"]).Equals("Inscrições") || ((string)rss2[i]["intentLabel"]).Equals("MEC") || ((string)rss2[i]["intentLabel"]).Equals("ManualAluno"))
                     {
                         pImagem.BackgroundImage = Image.FromFile(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + @"\TCC\Codigo\Chatbot\Chatbot\Resources\Eva\eve_eyes_02.png");
                     }
@@ -209,9 +212,6 @@ namespace Chatbot
                     }
                 }
             }
-
-            SpeechToText();
-
         }
         #endregion
         #region WatsonAssistant
@@ -231,7 +231,6 @@ namespace Chatbot
             string assistant = WatsonAssistantTools.Assistant(responseBody);
 
             Speaker.Speak(assistant);
-            TranslateMessageToEnglish();
         }
         #endregion
     }
